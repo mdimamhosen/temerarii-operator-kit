@@ -180,7 +180,14 @@ def run(brand: str, only: str | None = None) -> int:
     print(f"GATES — brand={brand}\n")
     failed = 0
     for name in names:
-        ok, problems = GATES[name](brand)
+        # A gate that RAISES is a failed gate, not a dead run. Letting the exception
+        # escape kills every gate after it, so one loud bug hides all the quiet ones —
+        # you fix the crash, re-run, and discover the next problem you could have seen
+        # ten minutes earlier. Report it and keep going.
+        try:
+            ok, problems = GATES[name](brand)
+        except Exception as e:
+            ok, problems = False, [f"raised {type(e).__name__}: {e}"]
         print(f"  {'PASS' if ok else 'FAIL'}  {name}")
         if not ok:
             failed += 1
