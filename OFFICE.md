@@ -75,6 +75,44 @@ the week people actually watch.
 
 ---
 
+## Public surfaces are generated, never hand-edited
+
+Some of what the studio publishes is a **build of the office**, not a separate site. The
+candidate sandbox you may have been sent is one of these: a generator reads the office
+build, copies an **allowlist** of sections, rewrites the brand, and refuses to ship
+anything that still names the studio after rewriting.
+
+**Three rules govern every generated surface, and they are the whole safety model:**
+
+**1 · Allowlist, never blocklist.** Absent means excluded — including sections that look
+harmless today. A renderer that starts emitting something sensitive next month must not
+reach the public because nobody remembered to add it to a deny list. **Fail closed.**
+
+**2 · The output is not source. Never edit it, never commit it.** It is regenerated on
+every build and your edit disappears. Worse, hand-editing generated output routes around
+the gate that made it safe to publish — and a page that was quarantined for a reason gets
+restored by someone who thought they were fixing a typo.
+
+**3 · A quarantine is a finding, not a nuisance.** When the gate holds a page back, it has
+found a renderer that is still repo-scoped instead of brand-scoped. **The fix is in the
+renderer.** Widening the gate to let the page through is how a brand leak reaches a
+stranger.
+
+### The failure this design already caught
+
+A page that survives the gate can still ship broken, because the gate checks *content*, not
+*rendering*. A real one: pages copied from one build referenced a stylesheet that lived in
+another, so the stylesheet 404'd and **every one of those pages deployed completely
+unstyled.** The browser reported it as a MIME-type error — because the 404 body is served
+as `text/plain` — which named the wrong cause entirely.
+
+**Two things generalise from that.** A 200 on a page says nothing about whether its assets
+resolved; check what it *references*, not just that it loaded. And when a build can produce
+something silently broken, the build should **fail loudly** rather than log it, because
+nobody reads a build log looking for an absence.
+
+---
+
 **Next:** `CRAFT.md` for what a single asset contains and how each layer fails silently.
 `FROM-KIT-TO-PRODUCTION.md` for what changes when you move from this kit to the real
 system.
