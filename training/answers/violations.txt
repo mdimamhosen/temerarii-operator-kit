@@ -1,0 +1,11 @@
+10 days.Mon.social[2] dangerous
+10 days.Thu.social[2] don't wait
+10 days.Sat.email_body cheapest
+
+Negation case — "dangerous" in Mon social[2]:
+The line is arguing against fear-selling ("…not … because spring is dangerous"). A word list
+cannot see intent, so the gate is right to flag the token and wrong to treat the flag as
+the final call. I would keep the banned-term hit, escalate to the Creative Lead with the
+sentence context, and not auto-rewrite. If we keep the copy, add a gate annotation
+(allowed_negation / reviewed) so the same false positive does not block every re-run —
+and so we do not train operators to click past real hits.
