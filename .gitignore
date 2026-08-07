@@ -23,15 +23,13 @@ venv/
 node_modules/
 
 # Editors / OS
-.vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
 # Never commit credentials. There are none in this kit and there should never be —
 # every exercise runs against the local mock API.
-.env
-.env.*
 !.env.example
 secrets/
 credentials/
+config.bat
