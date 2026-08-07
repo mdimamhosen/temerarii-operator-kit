@@ -25,9 +25,12 @@ if (fmBlock) {
 }
 
 // "## Slides" -> one entry per line
+// CRLF-safe: on Windows the storyboard is \r\n. Splitting on "\n" leaves a trailing
+// "\r", and /.^$/ fails because "." does not match the CR line terminator. That made
+// this extract report "No slides found" on an otherwise valid board.
 const slides = [];
 const sl = raw.split(/^## Slides\s*$/m)[1] ?? "";
-for (const line of sl.split("\n")) {
+for (const line of sl.split(/\r?\n/)) {
   const m = line.match(/^-\s+(.*)$/);
   if (!m) continue;
   const text = m[1].trim();
