@@ -5,11 +5,11 @@
   "description": "The render half of the pipeline — one composition, driven by authored data.",
   "scripts": {
     "prepare-data": "node scripts/extract.mjs",
-    "prepare-audio": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/speak-vo.ps1 && python scripts/make-bed.py",
-    "render:16x9": "npm run prepare-data && remotion render SceneReel out/w10-16x9.mp4",
-    "render:9x16": "npm run prepare-data && remotion render SceneReelVertical out/w10-9x16.mp4",
+    "prepare-audio": "python scripts/build-vo.py && python scripts/make-bed.py",
+    "render:16x9": "remotion render SceneReel out/w10-16x9.mp4",
+    "render:9x16": "remotion render SceneReelVertical out/w10-9x16.mp4",
     "render": "npm run render:16x9 && npm run render:9x16",
-    "render:with-audio": "npm run prepare-data && npm run prepare-audio && npm run render",
+    "produce": "npm run prepare-data && npm run prepare-audio && npm run render",
     "studio": "npm run prepare-data && remotion studio"
   },
   "dependencies": {
