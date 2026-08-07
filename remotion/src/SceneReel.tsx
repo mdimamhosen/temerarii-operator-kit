@@ -16,12 +16,37 @@ import data from "./data.json";
 const RED = "#EC1C24";
 const INK = "#0A0A0C";
 
+/** Burned-in caption — most viewers watch muted; this is the primary channel. */
+const Caption: React.FC<{ text: string; vertical: boolean }> = ({ text, vertical }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: vertical ? "6%" : "10%",
+      right: vertical ? "6%" : "10%",
+      // Stay above platform UI on 9:16 (bottom fifth reserved).
+      bottom: vertical ? "28%" : "8%",
+      backgroundColor: "rgba(0,0,0,0.72)",
+      color: "#fff",
+      fontSize: vertical ? 36 : 32,
+      lineHeight: 1.35,
+      fontWeight: 600,
+      padding: vertical ? "14px 18px" : "12px 20px",
+      borderRadius: 8,
+      textAlign: "center",
+      fontFamily: "Tahoma, Verdana, sans-serif",
+    }}
+  >
+    {text}
+  </div>
+);
+
 const Slide: React.FC<{ direction: string; onScreen: string | null }> = ({
   direction, onScreen,
 }) => {
   const frame = useCurrentFrame();
-  const { width, height, fps } = useVideoConfig();
+  const { width, height } = useVideoConfig();
   const vertical = height > width;
+  const caption = onScreen ?? direction;
 
   // Ease in over 8 frames. One focal move per scene — see the brand book's motion rules.
   const enter = interpolate(frame, [0, 8], [0, 1], {
@@ -73,6 +98,7 @@ const Slide: React.FC<{ direction: string; onScreen: string | null }> = ({
           }}
         />
       </div>
+      <Caption text={caption} vertical={vertical} />
     </AbsoluteFill>
   );
 };
