@@ -1,0 +1,25 @@
+﻿========================================================================
+OPERATOR KIT ù SCORECARD
+========================================================================
+
+  [PASS]  1. Both brands load and their gates pass
+          both brands load; placement/completeness/brand_package pass for ['northgate-home', 'temerarii-media']
+
+  [PASS]  2. Fiscal weeks wrap past 52 correctly
+          week 53 -> 2027-W01; place() runs past 52 instead of clamping
+
+  [PASS]  3. Voice rails are brand-scoped, not shared
+          temerarii bans 28, northgate bans 29, no overlap on probes
+
+  [PASS]  4. Find the planted violations in northgate-home
+          named all 3 planted violations
+
+  [PASS]  5. Compute a MINIMAL dirty set
+          dirty set is minimal: [11]
+
+  [PASS]  6. Build valid publish payloads
+          165 payload(s) across 15 channel(s) (1 manual), all matching the brand package
+
+========================================================================
+  6/6 passed
+========================================================================
